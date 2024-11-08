@@ -1,0 +1,80 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - ask_product_info  # new intent
+  - report_issue      # new intent
+  - ask_recommendation # new intent
+  - inquire_product  # new intent
+  - ask_product # new intent
+  - complain # new intent
+
+entities:
+  - product_name #Adding entity for product name
+  - category #Adding entity for category
+  - faq_question #Adding entity for FAQ questions
+
+#Adding slots for product_name makes it easier to track the conversation and provide more personalized responses.
+slots:
+  product_name:
+    type: text
+    influence_conversation: true
+    mappings:  # Addded mappings for how the slot can be filled
+      - type: from_entity
+        entity: product_name
+  faq_question:
+    type: text
+    influence_conversation: true
+    mappings:  # Added  mappings for how the slot can be filled
+      - type: from_entity
+        entity: faq_question
+
+#Added new responses for the new intents that will be used in the stories.
+responses:
+  utter_ask_product_info:
+  - text: "Which product would you like information about?"
+
+  utter_report_issue:
+  - text: "I'm sorry to hear that. Could you specify the product and the issue?"
+
+  utter_ask_recommendation:
+  - text: "What type of product are you looking for recommendations on?"
+
+  utter_greet:
+  - text: "Hey! How are you?"
+
+  utter_cheer_up:
+  - text: "Here is something to cheer you up:"
+    image: "https://i.imgur.com/nGF1K8f.jpg"
+
+  utter_did_that_help:
+  - text: "Did that help you?"
+
+  utter_happy:
+  - text: "Great, carry on!"
+
+  utter_apologize:
+  - text: "I'm sorry for the inconvenience. How can I assist you further?"
+
+  utter_goodbye:
+  - text: "Bye"
+
+  utter_iamabot:
+  - text: "I am a bot, powered by Rasa."
+
+actions:
+  - action_provide_product_info
+  - action_solve_complaint
+  - action_recommend_product
+  - action_detect_sentiment
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
